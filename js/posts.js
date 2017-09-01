@@ -1,1 +1,1 @@
-[{"title":"ConcurrentHashMap","date":"2016.08.01","uri":"2016/08/01/ConcurrentHashMap/","excerpt":""},{"title":"CopyOnWriteArrayList","date":"2016.08.01","uri":"2016/08/01/CopyOnWriteArrayList/","excerpt":""}]
+[{"title":"ResponseBody","date":"2016.08.01","uri":"2016/08/01/@RequestBody/","excerpt":""},{"title":"ConcurrentHashMap","date":"2016.08.01","uri":"2016/08/01/ConcurrentHashMap/","excerpt":""},{"title":"CopyOnWriteArrayList","date":"2016.08.01","uri":"2016/08/01/CopyOnWriteArrayList/","excerpt":""}]
