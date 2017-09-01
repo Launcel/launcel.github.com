@@ -83,7 +83,7 @@
       
         <!-- Table of Contents -->
         
-        <p>首先看ConcurrentHashMap的主要成员结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure></p>
+        <p>首先看ConcurrentHashMap的主要成员结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div><div class="line">---</div><div class="line">&lt;!-- more --&gt;</div><div class="line">---</div></pre></td></tr></table></figure></p>
 <p>在看看ConcurrentHashMap的主要内部类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">static final class HashEntry&lt;K,V&gt; &#123;</div><div class="line">     final int hash;</div><div class="line">     final K key;</div><div class="line">     volatile V value;</div><div class="line">     volatile HashEntry&lt;K,V&gt; next;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable &#123;</div><div class="line">    static final int MAX_SCAN_RETRIES =</div><div class="line">        Runtime.getRuntime().availableProcessors() &gt; 1 ? 64 : 1;</div><div class="line">    transient volatile HashEntry&lt;K,V&gt;[] table;</div><div class="line">    transient int count;</div><div class="line">    transient int modCount;</div><div class="line">    transient int threshold;</div><div class="line">    final float loadFactor;</div></pre></td></tr></table></figure>
 <p>ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素,当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。</p>
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/12/ConcurrentHashMap/" data-id="cj71y35xa0000cw6mdeab6uke" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/12/ConcurrentHashMap/" data-id="cj71y72d00000586mhaodmm6t" class="article-share-link">分享</a>
       
       
       
@@ -173,7 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/markdown/" data-id="cj71y35xt0005cw6meknyaljz" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/01/markdown/" data-id="cj71y72di0005586mw37gerra" class="article-share-link">分享</a>
       
       
       
@@ -224,7 +224,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/hello/" data-id="cj71y35xj0002cw6m7gv4kb0l" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/01/hello/" data-id="cj71y72d90002586m07pdoq7t" class="article-share-link">分享</a>
       
       
       
