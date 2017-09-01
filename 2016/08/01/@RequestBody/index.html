@@ -5,18 +5,18 @@
   
   <title>ResponseBody | Launcel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Content-Type的值来判断">
+  <meta name="description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，&amp;lt;br/&amp;gt;然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Conten">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ResponseBody">
 <meta property="og:url" content="http://launcel.coding.me/ls/2016/08/01/@RequestBody/index.html">
 <meta property="og:site_name" content="Launcel">
-<meta property="og:description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Content-Type的值来判断">
+<meta property="og:description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，&amp;lt;br/&amp;gt;然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Conten">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2017-09-01T16:05:48.000Z">
+<meta property="og:updated_time" content="2017-09-01T16:15:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ResponseBody">
-<meta name="twitter:description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Content-Type的值来判断">
+<meta name="twitter:description" content="@RequestBody    作用：   1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，&amp;lt;br/&amp;gt;然后把相应的数据绑定到要返回的对象上；    2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。   根据request header Conten">
   
   
     <link rel="icon" href="/favicon.png">
@@ -89,26 +89,26 @@
 <li>@RequestBody  </li>
 </ol>
 <p>作用：  </p>
-<pre><code>1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；  
+<pre><code>1. 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，&lt;br/&gt;然后把相应的数据绑定到要返回的对象上；  
 
 2. 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。  
-</code></pre><h2 id="根据request-header-Content-Type的值来判断，multipart-form-data类型的数据不能处理，其他格式，-必须（其他格式包括application-json-application-xml等。这些格式的数据，必须使用-RequestBody来处理）"><a href="#根据request-header-Content-Type的值来判断，multipart-form-data类型的数据不能处理，其他格式，-必须（其他格式包括application-json-application-xml等。这些格式的数据，必须使用-RequestBody来处理）" class="headerlink" title="根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式， 必须（其他格式包括application/json, application/xml等。这些格式的数据，必须使用@RequestBody来处理）"></a>根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式， 必须（其他格式包括application/json, application/xml等。这些格式的数据，必须使用@RequestBody来处理）</h2><h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><hr>
+</code></pre><h2 id="根据request-header-Content-Type的值来判断，multipart-form-data类型的数据不能处理，其他格式，-必须（其他格式包括application-json-application-xml等。这些格式的数据，必须使用-RequestBody来处理）"><a href="#根据request-header-Content-Type的值来判断，multipart-form-data类型的数据不能处理，其他格式，-必须（其他格式包括application-json-application-xml等。这些格式的数据，必须使用-RequestBody来处理）" class="headerlink" title="根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式， 必须（其他格式包括application/json, application/xml等。这些格式的数据，必须使用@RequestBody来处理）"></a><br>根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，<br>其他格式， 必须（其他格式包括application/json, application/xml等。这些格式的数据，必须使用@RequestBody来处理）</h2><h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><hr>
 <ol>
 <li>@ResponseBody  </li>
 </ol>
 <p>作用：  </p>
-<pre><code>该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。   
+<pre><code>该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，&lt;br/&gt;写入到Response对象的body数据区。   
 </code></pre><p>使用方式：  </p>
-<pre><code>返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；在使用 &lt;mvc:annotation-driven /&gt;标签配置时，默认配置了RequestMappingHandlerAdapter并为他配置了一下默认的HttpMessageConverter：  
+<pre><code>返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；&lt;br/&gt;在使用 &lt;mvc:annotation-driven /&gt;标签配置时，默认配置了RequestMappingHandlerAdapter并为他配置了一下默认的HttpMessageConverter：  
 
-@ResponseBody注解时： 根据Request对象header部分的Accept属性（逗号分隔），逐一按accept中的类型，去遍历找到能处理的HttpMessageConverter；MappingJacksonHttpMessageConverter 调用了 objectMapper.writeValue(OutputStream stream, Object)方法，使用@ResponseBody注解返回的对象就传入Object参数内。
+@ResponseBody注解时： 根据Request对象header部分的Accept属性（逗号分隔），逐一按accept中的类型，&lt;br/&gt;去遍历找到能处理的HttpMessageConverter；MappingJacksonHttpMessageConverter &lt;br/&gt;调用了 objectMapper.writeValue(OutputStream stream, Object)方法，&lt;br/&gt;使用@ResponseBody注解返回的对象就传入Object参数内。
 </code></pre><hr>
 <p>源码解析下回有时间结合源码说明</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj722natu00002k6mpeslbcbk" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj722zv3100028k6mlkw01tsv" class="article-share-link">分享</a>
       
       
       
