@@ -56,60 +56,47 @@
   
     <article id="post-CopyOnWriteArrayList" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/ls/2017/09/01/CopyOnWriteArrayList/" class="article-date">
-  <time datetime="2017-09-01T15:40:04.890Z" itemprop="datePublished">2017-09-01</time>
+    <a href="/ls/2016/08/01/CopyOnWriteArrayList/" class="article-date">
+  <time datetime="2016-08-01T08:12:12.000Z" itemprop="datePublished">2016-08-01</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
-        
         <p>注：CopyOnWriteArrayList是一个线程安全，读操作时无锁的ArrayList。<br>首先看里面的成员属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">transient final ReentrantLock lock = new ReentrantLock();</div><div class="line">private volatile transient Object[] array;</div><div class="line">public CopyOnWriteArrayList() &#123;</div><div class="line">    setArray(new Object[0]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注意点：<br>  ● 设置一个容量为0的Object[]；ArrayList会创造一个容量为10的Object[]</p>
-<ul>
-<li><p>添加元素操作：</p>
-<ul>
-<li>先获取锁</li>
-<li>上锁</li>
-<li>获取旧数组及长度</li>
-<li>创建新数组，容量为旧数组的+1</li>
-<li>把旧数组拷贝到新数组</li>
-<li>将要添加的数放入到新数组的尾端，返回该新数组<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public boolean add(E e) &#123;</div><div class="line">    final ReentrantLock lock = this.lock;</div><div class="line">    lock.lock();</div><div class="line">    try &#123;</div><div class="line">        Object[] elements = getArray();</div><div class="line">        int len = elements.length;</div><div class="line">        Object[] newElements = Arrays.copyOf(elements, len + 1);</div><div class="line">        newElements[len] = e;</div><div class="line">        setArray(newElements);</div><div class="line">        return true;</div><div class="line">    &#125; finally &#123;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>删除元素操作：</p>
-<ul>
-<li>获取锁，上锁</li>
-<li>获取旧数组及长度</li>
-<li>如果旧的长度为0，返回false（反之则创建新数字，长度为久的len-1）</li>
-<li>从0开始遍历老数组中除最后一个元素</li>
-<li>把旧数组中要删除的元素之前的元素复制到新数组</li>
-<li>把旧数组中要删除的元素之后的元素复制到新数组</li>
-<li>返回该新数组给全局数组</li>
-<li>如果旧数组要删除的元素是最后一位，则直接把前面的元素复制到新数组中，并返回新数组到全局数组<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public boolean remove(Object o) &#123;</div><div class="line">    final ReentrantLock lock = this.lock;</div><div class="line">    lock.lock();</div><div class="line">    try &#123;</div><div class="line">        Object[] elements = getArray();</div><div class="line">        int len = elements.length;</div><div class="line">        if (len != 0) &#123;</div><div class="line">            // Copy while searching for element to remove</div><div class="line">            // This wins in the normal case of element being present</div><div class="line">            int newlen = len - 1;</div><div class="line">            Object[] newElements = new Object[newlen];</div><div class="line"></div><div class="line">            for (int i = 0; i &lt; newlen; ++i) &#123;</div><div class="line">                if (eq(o, elements[i])) &#123;</div><div class="line">                    // found one;  copy remaining and exit</div><div class="line">                    for (int k = i + 1; k &lt; len; ++k)</div><div class="line">                        newElements[k-1] = elements[k];</div><div class="line">                    setArray(newElements);</div><div class="line">                    return true;</div><div class="line">                &#125; else</div><div class="line">                    newElements[i] = elements[i];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            // special handling for last cell</div><div class="line">            if (eq(o, elements[newlen])) &#123;</div><div class="line">                setArray(newElements);</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125; finally &#123;</div><div class="line">        lock.unlock();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>遍历操作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public ListIterator&lt;E&gt; listIterator() &#123;</div><div class="line">    return new COWIterator&lt;E&gt;(getArray(), 0);</div><div class="line">&#125;</div><div class="line">private static class COWIterator&lt;E&gt; implements ListIterator&lt;E&gt; &#123;</div><div class="line">    /** Snapshot of the array */</div><div class="line">    private final Object[] snapshot;</div><div class="line">    /** Index of element to be returned by subsequent call to next.  */</div><div class="line">    private int cursor;</div><div class="line"></div><div class="line">    private COWIterator(Object[] elements, int initialCursor) &#123;</div><div class="line">        cursor = initialCursor;</div><div class="line">        snapshot = elements; //把实际数组复给临时数组快照</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>注意：<br>由于遍历的只是全局数组的一个副本，即使全局数组发生了增删改变化，副本也不会变化，所以不会发生并发异常。但是，可能在遍历的过程中读到一些刚刚被删除的对象。</p>
-<p>总结：<br>  ● 线程安全，读操作时无锁的ArrayList<br>  ● 底层数据结构是一个Object[]，初始容量为0，之后每增加一个元素，容量+1，数组复制一遍<br>  ● 增删改上锁、读不上锁<br>  ● 遍历过程由于遍历的只是全局数组的一个副本，即使全局数组发生了增删改变化，副本也不会变化，所以不会发生并发异常<br>  ● 读多写少且脏数据影响不大的并发情况下，选择CopyOnWriteArrayList</p>
-<p>CopyOnWriteArraySet的底层也是依据CopyOnWriteArrayList实现的</p>
-
+<hr>
+<h2 id=""><a href="#" class="headerlink" title=""></a>
+        
+          <p class="article-more-link">
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/#more">阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2017/09/01/CopyOnWriteArrayList/" data-id="cj721rp3v0002no6mb1obvgc1" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj721weye0002ic6mb5v91qzn" class="article-share-link">分享</a>
       
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a></li></ul>
+
     </footer>
   </div>
   
@@ -158,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj721rp3l0000no6mxtjz58ju" class="article-share-link">分享</a>
+      <a data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj721wey40000ic6mpo53fkhe" class="article-share-link">分享</a>
       
       
       
@@ -202,7 +189,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">分类</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ls/categories/back-end/">后端</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ls/categories/back-end/">后端</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -212,7 +199,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tags">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -225,7 +212,7 @@
       <ul>
         
           <li>
-            <a href="/ls/2017/09/01/CopyOnWriteArrayList/">(no title)</a>
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
           </li>
         
           <li>
@@ -241,7 +228,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ls/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/ls/archives/2016/08/">八月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ls/archives/2016/08/">八月 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
