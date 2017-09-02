@@ -3,6 +3,14 @@
 <head>
   <meta charset="utf-8">
   
+  
+
+  
+  
+  
+  
+  
+  
   <title>Launcel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
@@ -14,122 +22,64 @@
 <meta name="twitter:title" content="Launcel">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
   
   
-    
-  
-  <link rel="stylesheet" href="/ls/css/style.css">
-  
+  <!-- baidu webmaster push 
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+  -->
 </head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/ls/">首页</a>
-        
-          <a class="main-nav-link" href="/ls/archives">归档</a>
-        
-          <a class="main-nav-link" href="/ls/about">关于</a>
-        
-      </nav>
-      
-    </div>
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/ls/" id="logo">Launcel</a>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Launcel" rel="home">Launcel</a>
       </h1>
       
-    </div>
-  </div>
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/about">About</a></li>
+                
+                </ul>
+            </div>
+    </nav>
 </header>
-      <div class="outer">
-        <section id="main">
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
   
-    <article id="post-CopyOnWriteArrayList" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/ls/2016/08/01/CopyOnWriteArrayList/" class="article-date">
-  <time datetime="2016-08-01T08:12:12.000Z" itemprop="datePublished">2016-08-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
-  </div>
+    <article id="post-@RequestBody" class="post-@RequestBody post type-post status-publish format-standard hentry">
+    <!---->
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="entry-header">
+        
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+    <h1 class="entry-title">
+      <a class="article-title" href="/2016/08/01/@RequestBody/">ResponseBody</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>注：CopyOnWriteArrayList是一个线程安全，读操作时无锁的ArrayList。<br>首先看里面的成员属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">transient final ReentrantLock lock = new ReentrantLock();</div><div class="line">private volatile transient Object[] array;</div><div class="line">public CopyOnWriteArrayList() &#123;</div><div class="line">    setArray(new Object[0]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<hr>
-<h2 id=""><a href="#" class="headerlink" title=""></a>
         
-          <p class="article-more-link">
-            <a href="/ls/2016/08/01/CopyOnWriteArrayList/#more">阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj723kt1q0002b86md9w741yf" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a></li></ul>
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj72ox3fn0000fc6mze0zrir0" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
 
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-@RequestBody" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/ls/2016/08/01/@RequestBody/" class="article-date">
-  <time datetime="2016-08-01T08:12:12.000Z" itemprop="datePublished">2016-08-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/ls/2016/08/01/@RequestBody/">ResponseBody</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
+    <div class="entry-content">
       
         <ul>
 <li>@RequestBody</li>
@@ -139,51 +89,114 @@
 <h2 id=""><a href="#" class="headerlink" title=""></a>
         
           <p class="article-more-link">
-            <a href="/ls/2016/08/01/@RequestBody/#more">阅读全文 »</a>
+            <a href="/2016/08/01/@RequestBody/#more" class="more-link">More <span class="meta-nav">→</span></a>
           </p>
         
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj723kt220005b86mtk6babm3" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Spring/">Spring</a></li></ul>
+    </div><!-- .entry-content -->
 
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-ConcurrentHashMap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/ls/2016/08/01/ConcurrentHashMap/" class="article-date">
-  <time datetime="2016-08-01T06:12:12.000Z" itemprop="datePublished">2016-08-01</time>
+    <footer class="entry-meta">
+    <a href="/2016/08/01/@RequestBody/">
+    <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
+        2016-08-01
+    </time>
 </a>
     
+  <span class="article-delim">&#8226;</span>
   <div class="article-category">
-    <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  <a class="article-category-link" href="/categories/back-end/">后端</a>
   </div>
 
-  </div>
-  <div class="article-inner">
     
-    
-      <header class="article-header">
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spring/">Spring</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-CopyOnWriteArrayList" class="post-CopyOnWriteArrayList post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/ls/2016/08/01/ConcurrentHashMap/">ConcurrentHashMap</a>
+    <h1 class="entry-title">
+      <a class="article-title" href="/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
     </h1>
   
 
-      </header>
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj72ox3g20002fc6mdmrm4zz8" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>注：CopyOnWriteArrayList是一个线程安全，读操作时无锁的ArrayList。<br>首先看里面的成员属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">transient final ReentrantLock lock = new ReentrantLock();</div><div class="line">private volatile transient Object[] array;</div><div class="line">public CopyOnWriteArrayList() &#123;</div><div class="line">    setArray(new Object[0]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id=""><a href="#" class="headerlink" title=""></a>
+        
+          <p class="article-more-link">
+            <a href="/2016/08/01/CopyOnWriteArrayList/#more" class="more-link">More <span class="meta-nav">→</span></a>
+          </p>
+        
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2016/08/01/CopyOnWriteArrayList/">
+    <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
+        2016-08-01
+    </time>
+</a>
     
-    <div class="article-entry" itemprop="articleBody">
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Concurrent/">Concurrent</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-ConcurrentHashMap" class="post-ConcurrentHashMap post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2016/08/01/ConcurrentHashMap/">ConcurrentHashMap</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj72ox3g20005fc6m180byfj4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
       
         <ol>
 <li>首先看ConcurrentHashMap的主要成员结构<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
@@ -193,200 +206,114 @@
 <h2 id=""><a href="#" class="headerlink" title=""></a>
         
           <p class="article-more-link">
-            <a href="/ls/2016/08/01/ConcurrentHashMap/#more">阅读全文 »</a>
+            <a href="/2016/08/01/ConcurrentHashMap/#more" class="more-link">More <span class="meta-nav">→</span></a>
           </p>
         
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj723kt1g0000b86mmt31qfja" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a></li></ul>
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2016/08/01/ConcurrentHashMap/">
+    <time datetime="2016-08-01T06:12:12.000Z" class="entry-date">
+        2016-08-01
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Concurrent/">Concurrent</a></li></ul>
 
     </footer>
-  </div>
-  
 </article>
- 
+
+
+
+
 
 
   
+  
 
-</section>
-           
-    <aside id="sidebar">
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
   
     
-  <div class="widget-wrap">
-     
-        <h3 class="follow-title ">Follow me</h3>
-     
-    <div class="widget follow">
-      
-              <a class="github" aria-hidden="true" href="https://github.com/Launcel" target="_blank" title="Github"></a>
-      
-      
-      
-      
-            <a class="email" aria-hidden="true"  href="mailto:shay93@163.com" target="_blank" title="邮箱"></a>
-      
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/back-end/">后端</a><span class="category-list-count">3</span></li></ul>
     </div>
-  </div>
-
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title categories">Categories</h3>
-    <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ls/categories/back-end/">后端</a><span class="category-list-count">3</span></li></ul>
-    </div>
-  </div>
-
+  </aside>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title tags">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/Concurrent/">Concurrent</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recent Posts</h3>
-    <div class="widget">
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
       <ul>
         
           <li>
-            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+            <a href="/2016/08/01/@RequestBody/">ResponseBody</a>
           </li>
         
           <li>
-            <a href="/ls/2016/08/01/@RequestBody/">ResponseBody</a>
+            <a href="/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
           </li>
         
           <li>
-            <a href="/ls/2016/08/01/ConcurrentHashMap/">ConcurrentHashMap</a>
+            <a href="/2016/08/01/ConcurrentHashMap/">ConcurrentHashMap</a>
           </li>
         
       </ul>
     </div>
-  </div>
+  </aside>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title archive">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/ls/archives/2016/08/">八月 2016</a><span class="archive-list-count">3</span></li></ul>
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Concurrent/">Concurrent</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring/">Spring</a><span class="tag-list-count">1</span></li></ul>
     </div>
-  </div>
-
+  </aside>
 
   
     
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/Concurrent/" style="font-size: 20px;">Concurrent</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a>
+    </div>
+  </aside>
+
   
-    <!--微信公众号二维码-->
-
-
-  
-</aside>
-
+</div>
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-left">
-      &copy; 2014 - 2017 Launcel&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
-    </div>
-     <div id="footer-right">
-      Contact&nbsp;|&nbsp;shay93@163.com
-    </div>
-  </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 Launcel
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
 </footer>
- <script src="/ls/jquery/jquery.min.js"></script>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/ls/" class="mobile-nav-link">首页</a>
-  
-    <a href="/ls/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/ls/about" class="mobile-nav-link">关于</a>
-  
-</nav>
-    <img class="back-to-top-btn" src="/ls/images/fly-to-top.png"/>
-<script>
-// Elevator script included on the page, already.
-window.onload = function() {
-  var elevator = new Elevator({
-    selector:'.back-to-top-btn',
-    element: document.querySelector('.back-to-top-btn'),
-    duration: 1000 // milliseconds
-  });
-}
-</script>
-      
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
-  
-
-  
+<script src="/js/jquery-2.0.3.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
+<script src="/js/script.js"></script>
 
+<script src="/js/navigation.js"></script>
 
+<div id="bg"></div>
 
-<!-- author:forvoid begin -->
-<!-- author:forvoid begin -->
-
-<!-- author:forvoid end -->
-
-<!-- author:forvoid end -->
-
-
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      })
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      })
-    </script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
- <script src="/ls/js/is.js"></script>
-
-
-  <link rel="stylesheet" href="/ls/fancybox/jquery.fancybox.css">
-  <script src="/ls/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/ls/js/script.js"></script>
-<script src="/ls/js/elevator.js"></script>
   </div>
 </body>
 </html>
