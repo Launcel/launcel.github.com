@@ -4,11 +4,7 @@
   <meta charset="utf-8">
   
   
-  <meta name="description" content="@RequestBody处理流程：
-
-该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；
-再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上
-根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。这些格式的数据，必须使用@RequestBody来处理）" />
+  <meta name="description" content="jQuery ready与window.onload在使用中的一些区别" />
   
 
   
@@ -17,20 +13,20 @@
   
   
   
-  <title>ResponseBody | Launcel</title>
+  <title>jQ ready与onload的区别 | Launcel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="@RequestBody处理流程：  该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 根据request header Content-Type的值来判断，multipart/form">
-<meta name="keywords" content="spring,java">
+  <meta name="description" content="jQuery ready与window.onload在使用中的一些区别">
+<meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ResponseBody">
-<meta property="og:url" content="http://launcel.coding.me/ls/2016/08/01/@RequestBody/index.html">
+<meta property="og:title" content="jQ ready与onload的区别">
+<meta property="og:url" content="http://launcel.coding.me/ls/2016/08/12/jq-ready/index.html">
 <meta property="og:site_name" content="Launcel">
-<meta property="og:description" content="@RequestBody处理流程：  该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 根据request header Content-Type的值来判断，multipart/form">
+<meta property="og:description" content="jQuery ready与window.onload在使用中的一些区别">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2017-09-02T15:45:28.000Z">
+<meta property="og:updated_time" content="2017-09-02T16:01:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ResponseBody">
-<meta name="twitter:description" content="@RequestBody处理流程：  该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 根据request header Content-Type的值来判断，multipart/form">
+<meta name="twitter:title" content="jQ ready与onload的区别">
+<meta name="twitter:description" content="jQuery ready与window.onload在使用中的一些区别">
   
   
     <link rel="icon" href="/favicon.png">
@@ -69,7 +65,7 @@
     </nav>
 </header>
       <div id="main" class="wrapper">
-        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-@RequestBody" class="post-@RequestBody post type-post status-publish format-standard hentry">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-jq-ready" class="post-jq-ready post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -77,57 +73,61 @@
         
   
     <h1 class="entry-title article-title">
-      ResponseBody
+      jQ ready与onload的区别
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj73hxk5600001w6m7lxw91to" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/jq-ready/" data-id="cj73hxk5u00071w6mu067uqeb" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <ul>
-<li><p>@RequestBody<br>处理流程：</p>
-<ul>
-<li>该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；</li>
-<li>再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上</li>
-<li>根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。这些格式的数据，必须使用@RequestBody来处理）<a id="more"></a>
-</li>
-</ul>
-</li>
-<li><p>@ResponseBody<br>作用：<br> 该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。<br>处理流程：</p>
-<ul>
-<li>返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；</li>
-<li>在使用 <mvc:annotation-driven>标签配置时，默认配置了RequestMappingHandlerAdapter并为他配置了一下默认的HttpMessageConverter</mvc:annotation-driven></li>
-<li>根据Request对象header部分的Accept属性（逗号分隔），逐一按accept中的类型去遍历找到能处理的HttpMessageConverter，MappingJacksonHttpMessageConverter 调用objectMapper.writeValue(OutputStream stream, Object)方法，使用@ResponseBody注解返回的对象就传入Object参数内。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<p>源码解析下回有时间结合源码说明</p>
+        <p>jQuery ready与window.onload在使用中的一些区别</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>window.load</th>
+<th>$(document).ready()=$(function(){})</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行时机</td>
+<td>必须包括页面中所有内容加载完成（包括图片）才执行</td>
+<td>页面所有DOM结构加载完毕就ok了</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>只能编写一个，否则后面的ready()覆盖前面的</td>
+<td>无要求</td>
+</tr>
+</tbody>
+</table>
 
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/ls/2016/08/01/@RequestBody/">
-    <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
-        2016-08-01
+    <a href="/ls/2016/08/12/jq-ready/">
+    <time datetime="2016-08-12T08:12:12.000Z" class="entry-date">
+        2016-08-12
     </time>
 </a>
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  <a class="article-category-link" href="/ls/categories/front-end/">前端</a>
   </div>
 
     
   <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/Spring/">spring</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/JavaScript/">js</a></li></ul>
 
     </footer>
 </article>
@@ -137,10 +137,10 @@
 <nav class="nav-single">
     <h3 class="assistive-text">文章导航</h3>
     
-        <span class="nav-previous"><a href="/ls/2016/08/12/jq-ready/" rel="prev"><span class="meta-nav">←</span> jQ ready与onload的区别</a></span>
+        <span class="nav-previous"><a href="/ls/2016/08/12/CountDownLatch/" rel="prev"><span class="meta-nav">←</span> CountDownLatch</a></span>
     
     
-        <span class="nav-next"><a href="/ls/2016/08/01/CopyOnWriteArrayList/" rel="next">CopyOnWriteArrayList <span class="meta-nav">→</span></a></span>
+        <span class="nav-next"><a href="/ls/2016/08/01/@RequestBody/" rel="next">ResponseBody <span class="meta-nav">→</span></a></span>
     
 </nav><!-- .nav-single -->
 
