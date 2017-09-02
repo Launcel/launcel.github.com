@@ -75,16 +75,20 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj72pij9b0000e06mm5xqlood" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj72sadfu0000y86majd50mom" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
         <ul>
-<li>@RequestBody</li>
+<li>@RequestBody<br>处理流程：<ul>
+<li>该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；</li>
+<li>再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上</li>
+<li>根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。这些格式的数据，必须使用@RequestBody来处理）</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">流程：</div><div class="line">    -   该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；</div><div class="line">    - 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上</div><div class="line">    - 根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。</div><div class="line">    这些格式的数据，必须使用@RequestBody来处理）</div></pre></td></tr></table></figure>
+</li>
+</ul>
 <hr>
 <h2 id=""><a href="#" class="headerlink" title=""></a>
         
@@ -135,7 +139,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj72pij9r0005e06m4s6p7aeu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj72sadg30002y86m3803vjta" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -192,7 +196,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj72pij9b0002e06m3f6kutpx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj72sadgf0005y86mbr16xu6d" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -291,6 +295,8 @@
     </div>
   </aside>
 
+  
+    
   
 </div>
       </div>
