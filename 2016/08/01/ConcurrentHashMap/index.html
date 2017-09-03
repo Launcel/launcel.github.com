@@ -4,12 +4,7 @@
   <meta charset="utf-8">
   
   
-  <meta name="description" content="概要简述
-ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。
-Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。
-一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素，当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。
-
-首先看ConcurrentHashMap的主要成员结构123456final int segmentMask;final int segmentShift;final Segment&amp;lt;K,V&amp;gt;[] segments;transient Set&amp;lt;K&amp;gt; keySet;transient Set&amp;lt;Map.Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet;transient Collection&amp;lt;V&amp;gt; values;" />
+  <meta name="description" content="不认命的独行者" />
   
 
   
@@ -85,7 +80,7 @@ Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的�
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj74e74e6000ync6m8vzkw9gu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj74ffihf00000w6m21pl9ca6" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -162,7 +157,7 @@ Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的�
 <nav class="nav-single">
     <h3 class="assistive-text">文章导航</h3>
     
-        <span class="nav-previous"><a href="/ls/2016/08/01/@RequestBody/" rel="prev"><span class="meta-nav">←</span> RequestBody与ResponseBody注解</a></span>
+        <span class="nav-previous"><a href="/ls/2016/08/01/CopyOnWriteArrayList/" rel="prev"><span class="meta-nav">←</span> CopyOnWriteArrayList</a></span>
     
     
 </nav><!-- .nav-single -->
@@ -196,10 +191,6 @@ Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的�
           </li>
         
           <li>
-            <a href="/ls/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
-          </li>
-        
-          <li>
             <a href="/ls/2016/08/12/CountDownLatch/">CountDownLatch</a>
           </li>
         
@@ -208,7 +199,11 @@ Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的�
           </li>
         
           <li>
-            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+            <a href="/ls/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/01/@RequestBody/">RequestBody与ResponseBody注解</a>
           </li>
         
       </ul>
