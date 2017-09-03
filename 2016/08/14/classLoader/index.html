@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="java虚拟机类加载器Bootstrap类加载器&amp;#8194;&amp;#8194;&amp;#8194;&amp;#8194;它负责将 /lib 下面的类库加载到内存中。Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>ClassLoader | Launcel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="java虚拟机类加载器Bootstrap类加载器&amp;#8194;&amp;#8194;&amp;#8194;&amp;#8194;它负责将 /lib 下面的类库加载到内存中。Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器">
+<meta name="keywords" content="Java,JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ClassLoader">
+<meta property="og:url" content="http://launcel.coding.me/ls/2016/08/14/classLoader/index.html">
+<meta property="og:site_name" content="Launcel">
+<meta property="og:description" content="java虚拟机类加载器Bootstrap类加载器&amp;#8194;&amp;#8194;&amp;#8194;&amp;#8194;它负责将 /lib 下面的类库加载到内存中。Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:updated_time" content="2017-09-03T07:04:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ClassLoader">
+<meta name="twitter:description" content="java虚拟机类加载器Bootstrap类加载器&amp;#8194;&amp;#8194;&amp;#8194;&amp;#8194;它负责将 /lib 下面的类库加载到内存中。Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/ls/css/style.css">
+  
+  
+  <!-- baidu webmaster push 
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+  -->
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/ls/" title="Launcel" rel="home">Launcel</a>
+      </h1>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/archives">Archives</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/about">About</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-classLoader" class="post-classLoader post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ClassLoader
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/14/classLoader/" data-id="cj74e74cv0009nc6mmva348qd" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="java虚拟机类加载器"><a href="#java虚拟机类加载器" class="headerlink" title="java虚拟机类加载器"></a>java虚拟机类加载器</h2><h3 id="Bootstrap类加载器"><a href="#Bootstrap类加载器" class="headerlink" title="Bootstrap类加载器"></a>Bootstrap类加载器</h3><p>&#8194;&#8194;&#8194;&#8194;它负责将 <java_runtime_home>/lib 下面的类库加载到内存中。Bootstrap类加载器负责加载rt.jar中的JDK类文件，它是所有类加载器的父加载器。Bootstrap类加载器没有任何父类加载器</java_runtime_home></p>
+<a id="more"></a>
+<h3 id="Extension类加载器"><a href="#Extension类加载器" class="headerlink" title="Extension类加载器"></a>Extension类加载器</h3><p>&#8194;&#8194;&#8194;&#8194;扩展类加载器是由 Sun 的 ExtClassLoader（sun.misc.Launcher$ExtClassLoader） 实现的。它负责将 &lt; Java_Runtime_Home &gt;/lib/ext 或者由系统变量 java.ext.dir 指定位置中的类库加载到内存中。Extension加载器由sun.misc.Launcher$ExtClassLoader实现。</p>
+<h3 id="System类加载器"><a href="#System类加载器" class="headerlink" title="System类加载器"></a>System类加载器</h3><p>&#8194;&#8194;&#8194;&#8194;又叫做Application类加载器，AppClassLoader负责将系统类路径（CLASSPATH）中指定的类库加载到内存中。开发者可以直接使用系统类加载器。</p>
+<h3 id="总结三种类加载器的加载路径"><a href="#总结三种类加载器的加载路径" class="headerlink" title="总结三种类加载器的加载路径"></a>总结三种类加载器的加载路径</h3><ul>
+<li>Bootstrap类加载器 – JRE/lib/rt.jar</li>
+<li>Extension类加载器 – JRE/lib/ext或者java.ext.dirs指向的目录</li>
+<li>Application类加载器 – CLASSPATH环境变量, 由-classpath或-cp选项定义,或者是JAR中的Manifest的classpath属性定义.</li>
+</ul>
+<p>类加载器的工作原理基于三个机制：<strong>委托、可见性和单一性</strong></p>
+<h3 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h3><p>&#8194;&#8194;&#8194;&#8194;JVM在加载类时默认采用的是双亲委派机制。某个特定的类加载器在接到加载类的请求时，首先将加载任务委托给父类加载器，依次递归，如果父类加载器可以完成类加载任务，就成功返回；只有父类加载器无法完成此加载任务时，才自己去加载。类加载器均继承于ClassLoader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">protected Class&lt;?&gt; loadClass(String name, boolean resolve) throws ClassNotFoundException</div><div class="line">&#123;</div><div class="line">	synchronized (getClassLoadingLock(name)) &#123;</div><div class="line">		// 首先检测类是否被加载</div><div class="line">		Class c = findLoadedClass(name);</div><div class="line">		if (c == null) &#123;</div><div class="line">			long t0 = System.nanoTime();</div><div class="line">			try &#123;</div><div class="line">			// 类如果没有被加载，就委托给父类加载</div><div class="line">				if (parent != null) &#123;</div><div class="line">				// 父类加载器存在</div><div class="line">					c = parent.loadClass(name, false);</div><div class="line">				&#125; else &#123;</div><div class="line">				// 父类加载器不存在，交由启动类加载器加载</div><div class="line">					c = findBootstrapClassOrNull(name);</div><div class="line">				&#125;</div><div class="line">			&#125; catch (ClassNotFoundException e) &#123;</div><div class="line">				// ClassNotFoundException thrown if class not found</div><div class="line">				// from the non-null parent class loader</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			if (c == null) &#123;</div><div class="line">				// 父类加载器和启动类加载器都不存在，则调用自身的加载器</div><div class="line">				long t1 = System.nanoTime();</div><div class="line">				c = findClass(name);</div><div class="line"></div><div class="line">				// this is the defining class loader; record the stats</div><div class="line">				sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);</div><div class="line">				sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);</div><div class="line">				sun.misc.PerfCounter.getFindClasses().increment();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		if (resolve) &#123;</div><div class="line">			resolveClass(c);</div><div class="line">		&#125;</div><div class="line">		return c;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>子类加载器可以看到父类加载器加载的类，而反之则不行。</p>
+<h3 id="单一性机制"><a href="#单一性机制" class="headerlink" title="单一性机制"></a>单一性机制</h3><p>父加载器加载过的类不能被子加载器加载第二次，自己在扩展类加载器的时候应该遵守（PS：<font color="red">在开发自己的类加载器时，最好不要覆写 loadClass()方法，而是覆写 findClass()方法</font>）。<font color="red">对于一个类加载器实例来说，相同全名的类只加载一次，即 loadClass方法不会被重复调用</font></p>
+<h3 id="显式使用方法"><a href="#显式使用方法" class="headerlink" title="显式使用方法"></a>显式使用方法</h3><ul>
+<li>调用java.lang.Class.forName</li>
+<li>用户自定义类加载器<ul>
+<li>首先检查请求的类型是否已经被这个类装载器装载到命名空间中</li>
+<li>委派类加载请求给父类加载器</li>
+<li>调用本类加载器的findClass，获取相应的字节码等信息</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/ls/2016/08/14/classLoader/">
+    <time datetime="2016-08-14T08:12:12.000Z" class="entry-date">
+        2016-08-14
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/jvm/">JVM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/java/">Java</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/ls/2016/08/12/jq-ready/" rel="next">jQ ready与onload的区别 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ls/categories/front-end/">前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/ls/categories/back-end/">后端</a><span class="category-list-count">5</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/ls/2016/08/14/classLoader/">ClassLoader</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/12/CountDownLatch/">CountDownLatch</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/12/js-method/">js小方法集合</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/jvm/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/java/">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/javaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/concurrent/">并发</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/ls/tags/jvm/" style="font-size: 10px;">JVM</a> <a href="/ls/tags/java/" style="font-size: 20px;">Java</a> <a href="/ls/tags/javaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/ls/tags/spring/" style="font-size: 10px;">Spring</a> <a href="/ls/tags/concurrent/" style="font-size: 16.67px;">并发</a>
+    </div>
+  </aside>
+
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 Launcel
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/ls/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/ls/fancybox/jquery.fancybox.css">
+  <script src="/ls/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/ls/js/script.js"></script>
+
+<script src="/ls/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
