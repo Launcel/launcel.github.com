@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Launcel">
 <meta property="og:description" content="概要简述 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。 Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Seg">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2017-09-03T03:43:40.000Z">
+<meta property="og:updated_time" content="2017-09-03T12:29:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ConcurrentHashMap">
 <meta name="twitter:description" content="概要简述 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。 Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Seg">
@@ -84,7 +84,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://launcel.github.io/2016/08/01/ConcurrentHashMap/" data-id="cj74plfid0004oc6maeml26ve" class="leave-reply bdsharebuttonbox" data-cmd="more"></a>
+            <a href="javascript:void(0);" data-url="https://launcel.github.io/2016/08/01/ConcurrentHashMap/" data-id="cj74prxmh0005fs6mbhsw15wd" class="leave-reply bdsharebuttonbox" data-cmd="more"></a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -95,8 +95,8 @@
 <li>Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。</li>
 <li>一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素，<font color="red"><strong>当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。</strong></font></li>
 </ul>
-<h3 id="首先看ConcurrentHashMap的主要成员结构"><a href="#首先看ConcurrentHashMap的主要成员结构" class="headerlink" title="首先看ConcurrentHashMap的主要成员结构"></a>首先看ConcurrentHashMap的主要成员结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
 <a id="more"></a>
+<h3 id="首先看ConcurrentHashMap的主要成员结构"><a href="#首先看ConcurrentHashMap的主要成员结构" class="headerlink" title="首先看ConcurrentHashMap的主要成员结构"></a>首先看ConcurrentHashMap的主要成员结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
 <h3 id="再看看ConcurrentHashMap的主要内部类"><a href="#再看看ConcurrentHashMap的主要内部类" class="headerlink" title="再看看ConcurrentHashMap的主要内部类"></a>再看看ConcurrentHashMap的主要内部类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">static final class HashEntry&lt;K,V&gt; &#123;</div><div class="line">     final int hash;</div><div class="line">     final K key;</div><div class="line">     volatile V value;</div><div class="line">     volatile HashEntry&lt;K,V&gt; next;</div><div class="line">&#125;</div><div class="line">static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable &#123;</div><div class="line">    static final int MAX_SCAN_RETRIES =</div><div class="line">        Runtime.getRuntime().availableProcessors() &gt; 1 ? 64 : 1;</div><div class="line">    transient volatile HashEntry&lt;K,V&gt;[] table;</div><div class="line">    transient int count;</div><div class="line">    transient int modCount;</div><div class="line">    transient int threshold;</div><div class="line">    final float loadFactor;</div></pre></td></tr></table></figure>
 <h3 id="2种不同的hash计算"><a href="#2种不同的hash计算" class="headerlink" title="2种不同的hash计算"></a>2种不同的hash计算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//定位到Segment的hash算法</div><div class="line">(hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;</div><div class="line">//定位到HashEntry的hash算法</div><div class="line"> int index = (tab.length - 1) &amp; hash;</div></pre></td></tr></table></figure>
 <h3 id="初始化方法"><a href="#初始化方法" class="headerlink" title="初始化方法"></a>初始化方法</h3><ul>
@@ -199,11 +199,11 @@
           </li>
         
           <li>
-            <a href="/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
+            <a href="/2016/08/12/js-method/">js小方法集合</a>
           </li>
         
           <li>
-            <a href="/2016/08/12/js-method/">js小方法集合</a>
+            <a href="/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
           </li>
         
           <li>
