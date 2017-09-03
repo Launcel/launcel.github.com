@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="概要简述
+ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。
+Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。
+一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素，当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。
+
+首先看ConcurrentHashMap的主要成员结构123456final int segmentMask;final int segmentShift;final Segment&amp;lt;K,V&amp;gt;[] segments;transient Set&amp;lt;K&amp;gt; keySet;transient Set&amp;lt;Map.Entry&amp;lt;K,V&amp;gt;&amp;gt; entrySet;transient Collection&amp;lt;V&amp;gt; values;" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>ConcurrentHashMap | Launcel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要简述 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。 Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Seg">
+<meta name="keywords" content="Java,并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConcurrentHashMap">
+<meta property="og:url" content="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/index.html">
+<meta property="og:site_name" content="Launcel">
+<meta property="og:description" content="概要简述 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。 Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Seg">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:updated_time" content="2017-09-03T03:43:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ConcurrentHashMap">
+<meta name="twitter:description" content="概要简述 ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成。 Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。 一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Seg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/ls/css/style.css">
+  
+  
+  <!-- baidu webmaster push 
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+  -->
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/ls/" title="Launcel" rel="home">Launcel</a>
+      </h1>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/archives">Archives</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/ls/about">About</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-ConcurrentHashMap" class="post-ConcurrentHashMap post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ConcurrentHashMap
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj747sk9s0005ts6ml2t0qunm" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="概要简述"><a href="#概要简述" class="headerlink" title="概要简述"></a>概要简述</h2><ul>
+<li><font color="red"><strong>ConcurrentHashMap是由Segment数组结构和HashEntry数组结构组成</strong></font>。</li>
+<li>Segment是一种可重入锁ReentrantLock，在ConcurrentHashMap里扮演锁的角色，HashEntry则用于存储键值对数据。</li>
+<li>一个ConcurrentHashMap里包含一个Segment数组，Segment的结构和HashMap类似，是一种数组和链表结构， 一个Segment里包含一个HashEntry数组，每个HashEntry是一个链表结构的元素， 每个Segment守护者一个HashEntry数组里的元素，<font color="red"><strong>当对HashEntry数组的数据进行修改时，必须首先获得它对应的Segment锁。</strong></font></li>
+</ul>
+<h3 id="首先看ConcurrentHashMap的主要成员结构"><a href="#首先看ConcurrentHashMap的主要成员结构" class="headerlink" title="首先看ConcurrentHashMap的主要成员结构"></a>首先看ConcurrentHashMap的主要成员结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="再看看ConcurrentHashMap的主要内部类"><a href="#再看看ConcurrentHashMap的主要内部类" class="headerlink" title="再看看ConcurrentHashMap的主要内部类"></a>再看看ConcurrentHashMap的主要内部类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">static final class HashEntry&lt;K,V&gt; &#123;</div><div class="line">     final int hash;</div><div class="line">     final K key;</div><div class="line">     volatile V value;</div><div class="line">     volatile HashEntry&lt;K,V&gt; next;</div><div class="line">&#125;</div><div class="line">static final class Segment&lt;K,V&gt; extends ReentrantLock implements Serializable &#123;</div><div class="line">    static final int MAX_SCAN_RETRIES =</div><div class="line">        Runtime.getRuntime().availableProcessors() &gt; 1 ? 64 : 1;</div><div class="line">    transient volatile HashEntry&lt;K,V&gt;[] table;</div><div class="line">    transient int count;</div><div class="line">    transient int modCount;</div><div class="line">    transient int threshold;</div><div class="line">    final float loadFactor;</div></pre></td></tr></table></figure>
+<h3 id="2种不同的hash计算"><a href="#2种不同的hash计算" class="headerlink" title="2种不同的hash计算"></a>2种不同的hash计算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//定位到Segment的hash算法</div><div class="line">(hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;</div><div class="line">//定位到HashEntry的hash算法</div><div class="line"> int index = (tab.length - 1) &amp; hash;</div></pre></td></tr></table></figure>
+<h3 id="初始化方法"><a href="#初始化方法" class="headerlink" title="初始化方法"></a>初始化方法</h3><ul>
+<li>ConcurrentHashMap初始化方法是通过initialCapacity，loadFactor, concurrencyLevel几个参数来初始化segments数组（段偏移量segmentShift，段掩码segmentMask和每个segment里的HashEntry数组；segments数组的长度ssize通过concurrencyLevel计算得出）。</li>
+<li>segmentShift用于定位参与hash运算的位数，segmentMask是哈希运算的掩码，默认情况下segmentShift为28，segmentMask为15，再哈希后的数最大是32位二进制数据，向右无符号移动28位，意思是让高4位参与到hash运算中</li>
+<li><font color="red"><strong>ConcurrentHashMap在获取或者插入数据的时候，都会对key的hashCode在进行一次哈希计算，目的是为了减少哈希冲突，使元素能够均匀的分布在不同的Segment上，从而提高容器的存取效率</strong></font>。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public ConcurrentHashMap(int initialCapacity,</div><div class="line">                             float loadFactor, int concurrencyLevel) &#123;</div><div class="line">    if (!(loadFactor &gt; 0) || initialCapacity &lt; 0 || concurrencyLevel &lt;= 0)</div><div class="line">        throw new IllegalArgumentException();</div><div class="line">    if (concurrencyLevel &gt; MAX_SEGMENTS)</div><div class="line">        concurrencyLevel = MAX_SEGMENTS;</div><div class="line">    // Find power-of-two sizes best matching arguments</div><div class="line">    int sshift = 0;</div><div class="line">    int ssize = 1;</div><div class="line">    while (ssize &lt; concurrencyLevel) &#123;</div><div class="line">        ++sshift;</div><div class="line">        ssize &lt;&lt;= 1;</div><div class="line">    &#125;</div><div class="line">    this.segmentShift = 32 - sshift;</div><div class="line">    this.segmentMask = ssize - 1;</div><div class="line">    if (initialCapacity &gt; MAXIMUM_CAPACITY)</div><div class="line">        initialCapacity = MAXIMUM_CAPACITY;</div><div class="line">    int c = initialCapacity / ssize;</div><div class="line">    if (c * ssize &lt; initialCapacity)</div><div class="line">        ++c;</div><div class="line">    int cap = MIN_SEGMENT_TABLE_CAPACITY;</div><div class="line">    while (cap &lt; c)</div><div class="line">        cap &lt;&lt;= 1;</div><div class="line">    // create segments and segments[0]</div><div class="line">    Segment&lt;K,V&gt; s0 =</div><div class="line">        new Segment&lt;K,V&gt;(loadFactor, (int)(cap * loadFactor),</div><div class="line">                         (HashEntry&lt;K,V&gt;[])new HashEntry[cap]);</div><div class="line">    Segment&lt;K,V&gt;[] ss = (Segment&lt;K,V&gt;[])new Segment[ssize];</div><div class="line">    UNSAFE.putOrderedObject(ss, SBASE, s0); // ordered write of segments[0]</div><div class="line">    this.segments = ss;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="get方法"><a href="#get方法" class="headerlink" title="get方法"></a>get方法</h3><p>&#8194;&#8194;&#8194;&#8194;Segment的get操作实现非常简单和高效。<font color="red"><strong>get操作的高效之处在于整个get过程不需要加锁</strong></font>。</p>
+<ul>
+<li>先经过一次再哈希，然后使用这个哈希值通过哈希运算定位到segment</li>
+<li>再通过哈希算法定位到元素。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public V get(Object key) &#123;</div><div class="line">    Segment&lt;K,V&gt; s; // manually integrate access methods to reduce overhead</div><div class="line">    HashEntry&lt;K,V&gt;[] tab;</div><div class="line">    int h = hash(key);</div><div class="line">    long u = (((h &gt;&gt;&gt; segmentShift) &amp; segmentMask) &lt;&lt; SSHIFT) + SBASE;</div><div class="line">    if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObjectVolatile(segments, u)) != null &amp;&amp;</div><div class="line">        (tab = s.table) != null) &#123;</div><div class="line">        for (HashEntry&lt;K,V&gt; e = (HashEntry&lt;K,V&gt;) UNSAFE.getObjectVolatile</div><div class="line">                 (tab, ((long)(((tab.length - 1) &amp; h)) &lt;&lt; TSHIFT) + TBASE);</div><div class="line">             e != null; e = e.next) &#123;</div><div class="line">            K k;</div><div class="line">            if ((k = e.key) == key || (e.hash == h &amp;&amp; key.equals(k)))</div><div class="line">                return e.value;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h3><p>&#8194;&#8194;&#8194;&#8194;由于put方法里需要对共享变量进行写入操作，所以为了线程安全，在操作共享变量时必须得加锁。</p>
+<ul>
+<li>Put方法首先定位到Segment，然后在Segment里进行插入操作。</li>
+<li>先判断是否需要对Segment里的HashEntry数组进行扩容，<ul>
+<li>判断Segment里的HashEntry数组是否超过容量（threshold），如果超过阀值，数组进行扩容。<ul>
+<li>扩容的时候首先会创建一个两倍于原容量的数组，然后将原数组里的元素进行再hash后插入到新的数组里（ps：扩容时，会对原数组的数据进行重新计算hash，然后放入新的Map中，有点耗时）。为了高效ConcurrentHashMap不会对整个容器进行扩容，而只对某个segment进行扩容。</li>
+</ul>
+</li>
+<li>定位添加元素的位置然后放在HashEntry数组里。</li>
+</ul>
+</li>
+<li>完成操作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">public V put(K key, V value) &#123;</div><div class="line">    Segment&lt;K,V&gt; s;</div><div class="line">    if (value == null) throw new NullPointerException();</div><div class="line">    int hash = hash(key);</div><div class="line">    int j = (hash &gt;&gt;&gt; segmentShift) &amp; segmentMask;</div><div class="line">    if ((s = (Segment&lt;K,V&gt;)UNSAFE.getObject          </div><div class="line">    // nonvolatile; recheck in ensureSegment</div><div class="line">         (segments, (j &lt;&lt; SSHIFT) + SBASE)) == null) </div><div class="line">        s = ensureSegment(j);</div><div class="line">    return s.put(key, hash, value, false);</div><div class="line">&#125;</div><div class="line">final V put(K key, int hash, V value, boolean onlyIfAbsent) &#123;</div><div class="line">    HashEntry&lt;K,V&gt; node = tryLock() ? null : scanAndLockForPut(key, hash, value);</div><div class="line">    V oldValue;</div><div class="line">    try &#123;</div><div class="line">        HashEntry&lt;K,V&gt;[] tab = table;</div><div class="line">        int index = (tab.length - 1) &amp; hash;</div><div class="line">        HashEntry&lt;K,V&gt; first = entryAt(tab, index);</div><div class="line">        for (HashEntry&lt;K,V&gt; e = first;;) &#123;</div><div class="line">            if (e != null) &#123;</div><div class="line">                K k;</div><div class="line">                if ((k = e.key) == key ||</div><div class="line">                    (e.hash == hash &amp;&amp; key.equals(k))) &#123;</div><div class="line">                    oldValue = e.value;</div><div class="line">                    if (!onlyIfAbsent) &#123;</div><div class="line">                        e.value = value;</div><div class="line">                        ++modCount;</div><div class="line">                    &#125;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">                e = e.next;</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                if (node != null)</div><div class="line">                    node.setNext(first);</div><div class="line">                else</div><div class="line">                    node = new HashEntry&lt;K,V&gt;(hash, key, value, first);</div><div class="line">                int c = count + 1;</div><div class="line">                //阈值判断是否扩容</div><div class="line">                if (c &gt; threshold &amp;&amp; tab.length &lt; MAXIMUM_CAPACITY)</div><div class="line">                    rehash(node);</div><div class="line">                else</div><div class="line">                    setEntryAt(tab, index, node);</div><div class="line">                ++modCount;</div><div class="line">                count = c;</div><div class="line">                oldValue = null;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; finally &#123;</div><div class="line">        unlock();</div><div class="line">    &#125;</div><div class="line">    return oldValue;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="size方法"><a href="#size方法" class="headerlink" title="size方法"></a>size方法</h3><ul>
+<li>根据modCount来计算。<ul>
+<li>使用modCount变量，在put, remove和clean方法里操作元素前都会将变量modCount进行加1，</li>
+<li>在统计size前后比较modCount是否发生变化，从而得知容器的大小是否发生变化。</li>
+<li>如果modCount的值不相等，则把所有Segment的put，remove和clean方法全部锁住（默认2次无modCount比较统计size）。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">public int size() &#123;</div><div class="line">    // Try a few times to get accurate count. On failure due to</div><div class="line">    // continuous async changes in table, resort to locking.</div><div class="line">    final Segment&lt;K,V&gt;[] segments = this.segments;</div><div class="line">    int size;</div><div class="line">    boolean overflow; // true if size overflows 32 bits</div><div class="line">    long sum;         // sum of modCounts</div><div class="line">    long last = 0L;   // previous sum</div><div class="line">    int retries = -1; // first iteration isn&apos;t retry</div><div class="line">    try &#123;</div><div class="line">        for (;;) &#123;</div><div class="line">            if (retries++ == RETRIES_BEFORE_LOCK) &#123;</div><div class="line">                for (int j = 0; j &lt; segments.length; ++j)</div><div class="line">                    ensureSegment(j).lock(); // force creation</div><div class="line">            &#125;</div><div class="line">            sum = 0L;</div><div class="line">            size = 0;</div><div class="line">            overflow = false;</div><div class="line">            for (int j = 0; j &lt; segments.length; ++j) &#123;</div><div class="line">                Segment&lt;K,V&gt; seg = segmentAt(segments, j);</div><div class="line">                if (seg != null) &#123;</div><div class="line">                    sum += seg.modCount;</div><div class="line">                    int c = seg.count;</div><div class="line">                    if (c &lt; 0 || (size += c) &lt; 0)</div><div class="line">                        overflow = true;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            if (sum == last)</div><div class="line">                break;</div><div class="line">            last = sum;</div><div class="line">        &#125;</div><div class="line">    &#125; finally &#123;</div><div class="line">        if (retries &gt; RETRIES_BEFORE_LOCK) &#123;</div><div class="line">            for (int j = 0; j &lt; segments.length; ++j)</div><div class="line">                segmentAt(segments, j).unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return overflow ? Integer.MAX_VALUE : size;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/ls/2016/08/01/ConcurrentHashMap/">
+    <time datetime="2016-08-01T06:12:12.000Z" class="entry-date">
+        2016-08-01
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/concurrent/">并发</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/ls/2016/08/01/CopyOnWriteArrayList/" rel="prev"><span class="meta-nav">←</span> CopyOnWriteArrayList</a></span>
+    
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ls/categories/front-end/">前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/ls/categories/back-end/">后端</a><span class="category-list-count">4</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/ls/2016/08/12/CountDownLatch/">CountDownLatch</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/12/js-method/">js小方法集合</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/01/@RequestBody/">RequestBody与ResponseBody注解</a>
+          </li>
+        
+          <li>
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/java/">Java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/javaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/spring/">Spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/ls/tags/concurrent/">并发</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/ls/tags/java/" style="font-size: 20px;">Java</a> <a href="/ls/tags/javaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/ls/tags/spring/" style="font-size: 10px;">Spring</a> <a href="/ls/tags/concurrent/" style="font-size: 16.67px;">并发</a>
+    </div>
+  </aside>
+
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 Launcel
+    All rights reserved.</p>
+    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/ls/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/ls/fancybox/jquery.fancybox.css">
+  <script src="/ls/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/ls/js/script.js"></script>
+
+<script src="/ls/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
