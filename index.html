@@ -75,7 +75,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/CountDownLatch/" data-id="cj7465qjc00066g6muikjamjq" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/CountDownLatch/" data-id="cj746du4h0006u06m65dlto80" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -130,7 +130,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/jq-ready/" data-id="cj7465qjs00076g6m2ka46u3p" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/jq-ready/" data-id="cj746du4k0007u06ms1dmbfgc" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -185,7 +185,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/js-method/" data-id="cj7465qjs000a6g6mtppld8rd" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/12/js-method/" data-id="cj746du4p000au06mglp4ttlz" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -225,6 +225,62 @@
 
 
   
+    <article id="post-CopyOnWriteArrayList" class="post-CopyOnWriteArrayList post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj746du3w0000u06m1l5gkyd1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>注：CopyOnWriteArrayList是一个线程安全，读操作时无锁的ArrayList。<br>首先看里面的成员属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">transient final ReentrantLock lock = new ReentrantLock();</div><div class="line">private volatile transient Object[] array;</div><div class="line">public CopyOnWriteArrayList() &#123;</div><div class="line">    setArray(new Object[0]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意点：设置一个容量为0的Object[]；ArrayList会创造一个容量为10的Object[]<br>
+        
+          <p class="article-more-link">
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/#more" class="more-link">More <span class="meta-nav">→</span></a>
+          </p>
+        
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/ls/2016/08/01/CopyOnWriteArrayList/">
+    <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
+        2016-08-01
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/concurrent/">并发</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-@RequestBody" class="post-@RequestBody post type-post status-publish format-standard hentry">
     <!---->
 
@@ -240,7 +296,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj7465qiw00006g6mn90bja1a" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj746du4d0005u06m8zaujuoq" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -284,62 +340,6 @@
 
 
   
-    <article id="post-CopyOnWriteArrayList" class="post-CopyOnWriteArrayList post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/CopyOnWriteArrayList/" data-id="cj7465qjc00056g6msig4vqun" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>注：CopyOnWriteArrayList是一个线程安全，读操作时无锁的ArrayList。<br>首先看里面的成员属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">transient final ReentrantLock lock = new ReentrantLock();</div><div class="line">private volatile transient Object[] array;</div><div class="line">public CopyOnWriteArrayList() &#123;</div><div class="line">    setArray(new Object[0]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注意点：设置一个容量为0的Object[]；ArrayList会创造一个容量为10的Object[]<br>
-        
-          <p class="article-more-link">
-            <a href="/ls/2016/08/01/CopyOnWriteArrayList/#more" class="more-link">More <span class="meta-nav">→</span></a>
-          </p>
-        
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/ls/2016/08/01/CopyOnWriteArrayList/">
-    <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
-        2016-08-01
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/ls/categories/back-end/">后端</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ls/tags/concurrent/">并发</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
     <article id="post-ConcurrentHashMap" class="post-ConcurrentHashMap post type-post status-publish format-standard hentry">
     <!---->
 
@@ -355,16 +355,13 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj7465qjc00026g6mnnlp7wna" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/ConcurrentHashMap/" data-id="cj746du440002u06mefmunnoi" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <ul>
-<li>首先看ConcurrentHashMap的主要成员结构</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
+        <h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3><h5 id="首先看ConcurrentHashMap的主要成员结构"><a href="#首先看ConcurrentHashMap的主要成员结构" class="headerlink" title="首先看ConcurrentHashMap的主要成员结构"></a>首先看ConcurrentHashMap的主要成员结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">final int segmentMask;</div><div class="line">final int segmentShift;</div><div class="line">final Segment&lt;K,V&gt;[] segments;</div><div class="line">transient Set&lt;K&gt; keySet;</div><div class="line">transient Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;</div><div class="line">transient Collection&lt;V&gt; values;</div></pre></td></tr></table></figure>
         
           <p class="article-more-link">
             <a href="/ls/2016/08/01/ConcurrentHashMap/#more" class="more-link">More <span class="meta-nav">→</span></a>
@@ -431,11 +428,11 @@
           </li>
         
           <li>
-            <a href="/ls/2016/08/01/@RequestBody/">RequestBody与ResponseBody注解</a>
+            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
           </li>
         
           <li>
-            <a href="/ls/2016/08/01/CopyOnWriteArrayList/">CopyOnWriteArrayList</a>
+            <a href="/ls/2016/08/01/@RequestBody/">RequestBody与ResponseBody注解</a>
           </li>
         
       </ul>
