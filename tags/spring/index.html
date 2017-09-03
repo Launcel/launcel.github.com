@@ -4,11 +4,6 @@
   <meta charset="utf-8">
   
   
-  <meta name="description" content="@RequestBody处理流程：
-- 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；
-- 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上
-- 根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。这些格式的数据，必须使用@RequestBody来处理）" />
-  
 
   
   
@@ -16,20 +11,15 @@
   
   
   
-  <title>RequestBody与ResponseBody注解 | Launcel</title>
+  <title>Tag: Spring | Launcel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="@RequestBody处理流程： - 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； - 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 - 根据request header Content-Type的值来判断，multipart/">
-<meta name="keywords" content="Spring,Java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="RequestBody与ResponseBody注解">
-<meta property="og:url" content="http://launcel.coding.me/ls/2016/08/01/@RequestBody/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Launcel">
+<meta property="og:url" content="http://launcel.coding.me/ls/tags/spring/index.html">
 <meta property="og:site_name" content="Launcel">
-<meta property="og:description" content="@RequestBody处理流程： - 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； - 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 - 根据request header Content-Type的值来判断，multipart/">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:updated_time" content="2017-09-03T02:45:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RequestBody与ResponseBody注解">
-<meta name="twitter:description" content="@RequestBody处理流程： - 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上； - 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上 - 根据request header Content-Type的值来判断，multipart/">
+<meta name="twitter:title" content="Launcel">
   
   
     <link rel="icon" href="/favicon.png">
@@ -68,43 +58,30 @@
     </nav>
 </header>
       <div id="main" class="wrapper">
-        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-@RequestBody" class="post-@RequestBody post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
+        <div id="primary" class="site-content"><div id="content" role="main">
   
-    <h1 class="entry-title article-title">
-      RequestBody与ResponseBody注解
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/ls/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="post type-post status-publish format-standard hentry archive-type-post">
+  <header class="entry-header">
+      
+  
+    <h1 class="entry-title">
+      <a class="archive-article-title" href="/ls/2016/08/01/@RequestBody/">RequestBody与ResponseBody注解</a>
     </h1>
   
 
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://launcel.coding.me/ls/2016/08/01/@RequestBody/" data-id="cj747l7ex00000w6mlg549ezz" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <h4 id="RequestBody"><a href="#RequestBody" class="headerlink" title="@RequestBody"></a>@RequestBody</h4><p>处理流程：</p>
-<pre><code>- 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；
-- 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上
-- 根据request header Content-Type的值来判断，multipart/form-data类型的数据不能处理，其他格式，必须（其他格式包括application/json,application/xml等。这些格式的数据，必须使用@RequestBody来处理）
-</code></pre><a id="more"></a>
-<h4 id="ResponseBody"><a href="#ResponseBody" class="headerlink" title="@ResponseBody"></a>@ResponseBody</h4><p>作用：<br>&#8194;&#8194;&#8194;&#8194;该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。<br>处理流程：</p>
-<pre><code>- 返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；
-- 在使用 &lt;mvc:annotation-driven/&gt;标签配置时，默认配置了RequestMappingHandlerAdapter并为他配置了一下默认的HttpMessageConverter
-- 根据Request对象header部分的Accept属性（逗号分隔），逐一按accept中的类型去遍历找到能处理的HttpMessageConverter，MappingJacksonHttpMessageConverter 调用objectMapper.writeValue(OutputStream stream, Object)方法，使用@ResponseBody注解返回的对象就传入Object参数内。
-</code></pre><hr>
-<p>源码解析下回有时间结合源码说明</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
+  </header>
+  <footer class="entry-meta">
     <a href="/ls/2016/08/01/@RequestBody/">
     <time datetime="2016-08-01T08:12:12.000Z" class="entry-date">
         2016-08-01
@@ -122,24 +99,10 @@
 
     </footer>
 </article>
-
-
-    
-<nav class="nav-single">
-    <h3 class="assistive-text">文章导航</h3>
-    
-        <span class="nav-previous"><a href="/ls/2016/08/12/js-method/" rel="prev"><span class="meta-nav">←</span> js小方法集合</a></span>
-    
-    
-        <span class="nav-next"><a href="/ls/2016/08/01/CopyOnWriteArrayList/" rel="next">CopyOnWriteArrayList <span class="meta-nav">→</span></a></span>
-    
-</nav><!-- .nav-single -->
-
-
-
-
-
-
+  
+  
+    </div></section>
+  
 
 </div></div>
         <div id="secondary" class="widget-area" role="complementary">
