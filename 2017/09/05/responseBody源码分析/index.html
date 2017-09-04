@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="不认命的独行者" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>ResponseBody sources | Launcel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="还是把上回欠下的债补上，结合源码的形式解说@ResponseBody 首先所有的一切得开启  @ResponseBody注解主要还是HttpMessageConverter接口来完成的，不管那个json转换器，其实都是实现了这个接口的">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ResponseBody sources">
+<meta property="og:url" content="https://launcel.github.io/2017/09/05/responseBody源码分析/index.html">
+<meta property="og:site_name" content="Launcel">
+<meta property="og:description" content="还是把上回欠下的债补上，结合源码的形式解说@ResponseBody 首先所有的一切得开启  @ResponseBody注解主要还是HttpMessageConverter接口来完成的，不管那个json转换器，其实都是实现了这个接口的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:updated_time" content="2017-09-04T16:01:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ResponseBody sources">
+<meta name="twitter:description" content="还是把上回欠下的债补上，结合源码的形式解说@ResponseBody 首先所有的一切得开启  @ResponseBody注解主要还是HttpMessageConverter接口来完成的，不管那个json转换器，其实都是实现了这个接口的">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  <!-- baidu webmaster push 
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+  -->
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Launcel" rel="home">Launcel</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">不认命的独行者</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/about">About</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-responseBody源码分析" class="post-responseBody源码分析 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ResponseBody sources
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://launcel.github.io/2017/09/05/responseBody源码分析/" data-id="cj76cu0t4000gqs6mnui1620l" class="leave-reply bdsharebuttonbox" data-cmd="more"></a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p>还是把上回欠下的债补上，结合源码的形式解说@ResponseBody</p>
+<p>首先所有的一切得开启 <mvc:annotation-driven></mvc:annotation-driven></p>
+<p>@ResponseBody注解主要还是HttpMessageConverter接口来完成的，不管那个json转换器，其实都是实现了这个接口的</p>
+<a id="more"></a>
+<p>从顶层的BeanDefinitionParser接口开始，可以看到是由AnnotationDrivenBeanDefinitionParser来处理，在AnnotationDrivenBeanDefinitionParser的parse()方法中有着这<br>些处理<br>RootBeanDefinition handlerMappingDef = new RootBeanDefinition(RequestMappingHandlerMapping.class);<br>RootBeanDefinition bindingDef = new RootBeanDefinition(ConfigurableWebBindingInitializer.class);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RootBeanDefinition handlerMappingDef = new RootBeanDefinition(RequestMappingHandlerMapping.class);</div><div class="line">RootBeanDefinition bindingDef = new RootBeanDefinition(ConfigurableWebBindingInitializer.class);</div><div class="line">RootBeanDefinition handlerAdapterDef = new RootBeanDefinition(RequestMappingHandlerAdapter.class);</div></pre></td></tr></table></figure>
+<p>这两处已经可以看到RequestMappingHandlerMapping用来处理映射<br>RequestMappingHandlerAdapter用来处理请求后的逻辑执行</p>
+<p>继续看下面的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">private ManagedList&lt;?&gt; getMessageConverters(Element element, Object source, ParserContext parserContext) &#123;</div><div class="line">	Element convertersElement = DomUtils.getChildElementByTagName(element, &quot;message-converters&quot;);</div><div class="line">	ManagedList&lt;? super Object&gt; messageConverters = new ManagedList&lt;Object&gt;();</div><div class="line">	if (convertersElement != null) &#123;</div><div class="line">		messageConverters.setSource(source);</div><div class="line">		for (Element beanElement : DomUtils.getChildElementsByTagName(convertersElement, &quot;bean&quot;, &quot;ref&quot;)) &#123;</div><div class="line">			Object object = parserContext.getDelegate().parsePropertySubElement(beanElement, null);</div><div class="line">			messageConverters.add(object);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	if (convertersElement == null || Boolean.valueOf(convertersElement.getAttribute(&quot;register-defaults&quot;))) &#123;</div><div class="line">		messageConverters.setSource(source);</div><div class="line">	messageConverters.add(createConverterDefinition(ByteArrayHttpMessageConverter.class, source));</div><div class="line"></div><div class="line">		RootBeanDefinition stringConverterDef = createConverterDefinition(StringHttpMessageConverter.class, source);</div><div class="line">		stringConverterDef.getPropertyValues().add(&quot;writeAcceptCharset&quot;, false);</div><div class="line">		messageConverters.add(stringConverterDef);</div><div class="line">	messageConverters.add(createConverterDefinition(ResourceHttpMessageConverter.class, source));</div><div class="line">		messageConverters.add(createConverterDefinition(SourceHttpMessageConverter.class, source));</div><div class="line">		messageConverters.add(createConverterDefinition(AllEncompassingFormHttpMessageConverter.class, source));</div><div class="line"></div><div class="line">		if (romePresent) &#123;	messageConverters.add(createConverterDefinition(AtomFeedHttpMessageConverter.class, source));</div><div class="line">			messageConverters.add(createConverterDefinition(RssChannelHttpMessageConverter.class, source));</div><div class="line">		&#125;</div><div class="line">		if (jackson2XmlPresent) &#123;</div><div class="line">			RootBeanDefinition jacksonConverterDef = createConverterDefinition(MappingJackson2XmlHttpMessageConverter.class, source);</div><div class="line">			GenericBeanDefinition jacksonFactoryDef = createObjectMapperFactoryDefinition(source);</div><div class="line">			jacksonFactoryDef.getPropertyValues().add(&quot;createXmlMapper&quot;, true);</div><div class="line">			jacksonConverterDef.getConstructorArgumentValues().addIndexedArgumentValue(0, jacksonFactoryDef);</div><div class="line">			messageConverters.add(jacksonConverterDef);</div><div class="line">		&#125;</div><div class="line">		else if (jaxb2Present) &#123;</div><div class="line">			messageConverters.add(createConverterDefinition(Jaxb2RootElementHttpMessageConverter.class, source));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		if (jackson2Present) &#123;</div><div class="line">			RootBeanDefinition jacksonConverterDef = createConverterDefinition(MappingJackson2HttpMessageConverter.class, source);</div><div class="line">			GenericBeanDefinition jacksonFactoryDef = createObjectMapperFactoryDefinition(source);</div><div class="line">			jacksonConverterDef.getConstructorArgumentValues().addIndexedArgumentValue(0, jacksonFactoryDef);</div><div class="line">			messageConverters.add(jacksonConverterDef);</div><div class="line">		&#125;</div><div class="line">		else if (gsonPresent) &#123;</div><div class="line">			messageConverters.add(createConverterDefinition(GsonHttpMessageConverter.class, source));</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return messageConverters;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也就是说在<mvc:annotation-driven>节点中有message-converters的子节点的话，那么就用使用自定义的json转换器</mvc:annotation-driven></p>
+<p>像其他的ByteArrayHttpMessageConverter等等转换器都是实现HttpMessageConverter接口的</p>
+<p>在具体看RequestMappingHandlerAdapter中的invokeHandlerMethod方法进行handle处理额时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ServletInvocableHandlerMethod invocableMethod = createInvocableHandlerMethod(handlerMethod);</div><div class="line">invocableMethod.setHandlerMethodArgumentResolvers(this.argumentResolvers);</div><div class="line">invocableMethod.setHandlerMethodReturnValueHandlers(this.returnValueHandlers);</div></pre></td></tr></table></figure>
+<p>而在ServletInvocableHandlerMethod类中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">private HandlerMethodReturnValueHandlerComposite returnValueHandlers;</div><div class="line">public void setHandlerMethodReturnValueHandlers(HandlerMethodReturnValueHandlerComposite returnValueHandlers) &#123;</div><div class="line">	this.returnValueHandlers = returnValueHandlers;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>继而交有HandlerMethodReturnValueHandlerComposite来处理，而HandlerMethodReturnValueHandlerComposite又是通过一个HandlerMethodReturnValueHandler来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">private final List&lt;HandlerMethodReturnValueHandler&gt; returnValueHandlers =</div><div class="line">	new ArrayList&lt;HandlerMethodReturnValueHandler&gt;();</div></pre></td></tr></table></figure>
+<p>回过头来看RequestMappingHandlerAdapter<br>而在RequestMappingHandlerAdapter中，getDefaultArgumentResolvers方法有这么一段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">resolvers.add(new RequestResponseBodyMethodProcessor(getMessageConverters(), this.requestResponseBodyAdvice));</div></pre></td></tr></table></figure>
+<p>我们能发现RequestResponseBodyMethodProcessor实现了HandlerMethodReturnValueHandler接口。到这里已经一目了然了，看看RequestResponseBodyMethodProcessor的相应的几个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public boolean supportsParameter(MethodParameter parameter) &#123;</div><div class="line">	return parameter.hasParameterAnnotation(RequestBody.class);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">public boolean supportsReturnType(MethodParameter returnType) &#123;</div><div class="line">	return (AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ResponseBody.class) ||</div><div class="line">			returnType.hasMethodAnnotation(ResponseBody.class));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再回到HandlerMethodReturnValueHandlerComposite类中看相应的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public boolean supportsReturnType(MethodParameter returnType) &#123;</div><div class="line">	return getReturnValueHandler(returnType) != null;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private HandlerMethodReturnValueHandler getReturnValueHandler(MethodParameter returnType) &#123;</div><div class="line">	for (HandlerMethodReturnValueHandler handler : this.returnValueHandlers) &#123;</div><div class="line">		if (handler.supportsReturnType(returnType)) &#123;</div><div class="line">			return handler;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从而通过调用实现类RequestResponseBodyMethodProcessor里面的handleReturnValue方法，从而调用相应的readWithMessageConverters或者父类AbstractMessageConverterMethodProcessor里的writeWithMessageConverters方法</p>
+<hr>
+<p>初稿而已，暂时理清了思路，发出来是因为跟某人较上了劲，时间本来也很晚了，后面的什么根据请求头里的Accept信息来做相应的判断就懒得说了。下回再修改</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/09/05/responseBody源码分析/">
+    <time datetime="2017-09-05T15:50:12.000Z" class="entry-date">
+        2017-09-05
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/back-end/">后端</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">Spring</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2016/08/14/classLoader/" rel="next">ClassLoader <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/front-end/">前端</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/back-end/">后端</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/05/responseBody源码分析/">ResponseBody sources</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/14/classLoader/">ClassLoader</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/12/jq-ready/">jQ ready与onload的区别</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/12/CountDownLatch/">CountDownLatch</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/12/js-method/">js小方法集合</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">Java</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaScript/">JavaScript</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">Spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/concurrent/">并发</a><span class="tag-list-count">3</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/jvm/" style="font-size: 10px;">JVM</a> <a href="/tags/java/" style="font-size: 20px;">Java</a> <a href="/tags/javaScript/" style="font-size: 13.33px;">JavaScript</a> <a href="/tags/spring/" style="font-size: 13.33px;">Spring</a> <a href="/tags/concurrent/" style="font-size: 16.67px;">并发</a>
+    </div>
+  </aside>
+
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 Launcel
+    All rights reserved.</p>
+    <p>Powered by <a>Hexo</a></p>
+</footer>
+    
+
+<script src="/ls/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/ls/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
